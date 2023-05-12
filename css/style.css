@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 60px;
+        }
+.login-card {
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+.login-card-header {
+            background: #343a40;
+            color: #fff;
+        }
+
+.login-card-body {
+            padding: 40px;
+        }
+
+.login-card-footer {
+            background: #f8f9fa;
+            border-top: none;
+            text-align: right;
+        }
