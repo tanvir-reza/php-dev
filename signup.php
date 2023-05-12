@@ -59,6 +59,7 @@
             $email = sanitizeInput($_POST['email']);
             $password = sanitizeInput($_POST['password']);
             $password = md5(sha1($password));
+            
             $sql_uniq = "SELECT * FROM `user` WHERE `username` = ? OR `email` = ? ";
             $stmt = $conn->prepare($sql_uniq);
             $stmt->bind_param("ss", $username, $email);
@@ -71,9 +72,11 @@
             }
             else{
                 $stmt->close();
-                $sql = "INSERT INTO `user` (`username`, `email`, `password`) VALUES (?, ?, ?)";
+                $authToken = md5(sha1($password));
+                echo $authToken;
+                $sql = "INSERT INTO `user` (`username`, `email`, `password` , `auth_token`) VALUES (?, ?, ?, ?)";
                 $stmt1 = $conn->prepare($sql);
-                $stmt1->bind_param("sss", $username, $email, $password);
+                $stmt1->bind_param("ssss", $username, $email, $password ,$authToken);
                 $result = $stmt1->execute();
                 if($result){
                     header('location: ./login.php?msg=success');

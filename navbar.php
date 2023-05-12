@@ -10,13 +10,26 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
+        <?php if(isset($_COOKIE['CurrentUser'])){
+        echo  '<li class="nav-item">
+          <a class="nav-link" href="./profile.php">Profile</a>
+        </li>
         <li class="nav-item">
+          <a class="nav-link" href="./validation/logout_core.php">Logout</a>
+        </li>';
+        }
+        else{
+          echo '
+          <li class="nav-item">
           <a class="nav-link" href="login.php">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="signup.php">SignUp</a>
-        </li>
-        </ul>
+        </li>';
+        } 
+        ?>
+       
+      </ul>
     </div>
   </div>
 </nav>
