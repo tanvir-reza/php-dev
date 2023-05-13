@@ -60,7 +60,7 @@ if(isset($_POST['blog_title']) && isset($_POST['description']) && isset($_POST['
     }
 }
 
-
+?>
 
 
 
