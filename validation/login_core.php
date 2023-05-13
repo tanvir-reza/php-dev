@@ -1,6 +1,6 @@
 <?php
         if (!isset($_REQUEST['username']) && !isset($_REQUEST['password'])) {
-            header('location: ../login.php?');
+            header('location: ../login.php');
         }
         require_once('../config/db.php');
            function sanitizeInput($input) {
@@ -19,9 +19,10 @@
             $result = mysqli_query($conn, $sql);
             $user = mysqli_fetch_assoc($result);
             if($user){
-                $password1 = $password = md5(sha1($password));
-                if($password1 == $user['password']){
-                    setcookie("CurrentUser", $username, time() + (86400 * 30),"/");
+                 $password = md5(sha1($password));
+                 $auth = md5(sha1($password));
+                if($password == $user['password']){
+                    setcookie("CurrentUser", $auth, time() + (86400 * 30),"/");
                     // $_SESSION['username'] = $user['username'];
                     // $_SESSION['email'] = $user['email'];
                     // $_SESSION['id'] = $user['id'];

@@ -2,8 +2,24 @@
 <?php require_once('./navbar.php') ?>
 
 <?php 
-    if(isset($_SESSION['username'])){
+    if(isset($_SESSION['CurrentUser'])){
         header('location: ./index.php');
+    }
+    if(isset($_REQUEST['e_msg'])){
+        if($_GET['e_msg'] == 'error1')
+        {
+        echo "<div class='alert alert-danger alert-dismissible fade show w-50 container' role='alert'>
+        <strong>User Already Exist !!</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+        }
+        if($_GET['e_msg'] == 'error2')
+        {
+        echo "<div class='alert alert-danger alert-dismissible fade show w-50 container' role='alert'>
+        <strong>User Create Not Success !!</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+        }
     }
 ?>
 
@@ -50,7 +66,7 @@
                         return $sanitizedInput;
             }
 
-            $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+            
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
@@ -66,7 +82,7 @@
             $stmt->execute();
             $result_uniq = $stmt->get_result();
             if(mysqli_num_rows($result_uniq) > 0){
-                echo "<script>alert('User Already Exists !!')</script>";
+                header('location: ./signup.php?e_msg=error1');
                 $stmt->close();
                 $conn->close();
             }
@@ -81,7 +97,7 @@
                 if($result){
                     header('location: ./login.php?msg=success');
                 }else{
-                    echo "<script>alert('User Not Created Successfully !!')</script>";
+                    header('location: ./signup.php?e_msg=error2');
                 }
             }
 

@@ -2,7 +2,7 @@
 <?php require_once('./navbar.php') ?>
 
 <?php
- if(isset($_COOKIE['username'])){
+ if(isset($_COOKIE['CurrentUser'])){
      header('location: ./index.php');
  }
 ?>

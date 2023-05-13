@@ -15,6 +15,9 @@
           <a class="nav-link" href="./profile.php">Profile</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="./blog.php">Blog</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="./validation/logout_core.php">Logout</a>
         </li>';
         }
