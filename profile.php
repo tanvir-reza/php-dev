@@ -20,7 +20,7 @@
  ?>
 
 <div class="container text-center">
-    <h1 style="color: #d9efff" class="mt-3">Profile</h1>
+    <h1 style="color: #d9efff" class="mt-3">User Profile</h1>
 </div>
 
 
@@ -48,14 +48,52 @@
                 
             }
             ?>
-            <div class="container card w-50">
+            <div class="container card ">
                 <div class="card-body text-center">
                     <h1> <?php echo strtoupper($username); ?></h1>
-                    <h4> <?php echo $email; ?></h4>
-                    <p> <?php echo $bio; ?></p>
-                    <a class="btn btn-warning mt-5" href="./update.php">UPDATE INFO</a>
-                    <a class="btn btn-danger mt-5" href="./update_pass.php">UPDATE PASSWORD</a>
-
+                    <a class="btn btn-warning mt-1" href="./update.php">UPDATE INFO</a>
+                    <a class="btn btn-danger mt-1" href="./update_pass.php">UPDATE PASSWORD</a>
+            </div>
+            <div class="container">
+                
+                <table class="table table-dark table-hover ">
+                    <tr>
+                        <th>Blog Title</th>
+                        <th>Blog Description</th>
+                        <th>Blog Image</th>
+                        <th>Blog Date</th>
+                        <th>Blog Action</th>
+                    </tr>
+                    <?php
+                        $user_cookie = $_COOKIE['CurrentUser'];
+                        $user_sql = "SELECT id FROM `user` WHERE `auth_token` = '$user_cookie'";
+                        $user_result = mysqli_query($conn, $user_sql);
+                        $user_row = mysqli_fetch_assoc($user_result);
+                        $user_id = $user_row['id'];
+                        $sql = "SELECT * FROM blog WHERE user_id='$user_id'";
+                        $result = mysqli_query($conn, $sql);
+                        if($result == true){
+                            while($getRow = mysqli_fetch_array($result)){
+                                $blog_title = $getRow['title'];
+                                $blog_desc = $getRow['description'];
+                                $blog_img = $getRow['img'];
+                                $blog_date = $getRow['created_at'];
+                                ?>
+                                <tr>
+                                    <td><?php echo $blog_title; ?></td>
+                                    <td><?php echo $blog_desc; ?></td>
+                                    <td><img src="./uploads/<?php echo $blog_img; ?>" width="100px" height="100px" alt=""></td>
+                                    <td><?php echo $blog_date; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="./update_blog.php?up_blog_id=<?php echo $blog_id; ?>">UPDATE</a>
+                                        <a class="btn btn-danger" href="./delete_blog.php?blog_id=<?php echo $blog_id; ?>">DELETE</a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                    ?>
+                </table>
             </div>
 
             <?php
