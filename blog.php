@@ -4,6 +4,19 @@
 <?php
 require_once('./validation/fuctions.php');
 validUser();
+
+ if(isset($_GET['err'])){
+     echo "<div class='alert alert-danger alert-dismissible fade show w-50 container' role='alert'>
+        <strong>".$_GET['err']."</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+ }
+ if(isset($_GET['success'])){
+     echo "<div class='alert alert-success alert-dismissible fade show w-50 container' role='alert'>
+        <strong>Blog Created Successfully !!!</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+ }
 ?>
 
 
@@ -48,32 +61,37 @@ require_once('./config/db.php');
 
 if(isset($_POST['blog_title']) && isset($_POST['description']) && isset($_FILES['blog_img'])){
     $errors= array();
-    $blog_title = $_POST['blog_title'];
-    $description = $_POST['description'];
-    $blog_img = $_POST['blog_img'];
+    $blog_title = sanitizeInput($_POST['blog_title']);
+    $description = sanitizeInput($_POST['description']);
     $file_name = $_FILES['blog_img']['name'];
     $file_tmp =$_FILES['blog_img']['tmp_name'];
     $file_type=$_FILES['blog_img']['type'];
-    $file_ext=strtolower(end(explode('.',$_FILES['blog_img']['name'])));
-    $extensions= array("jpeg","jpg","png");
-    if(in_array($file_ext,$extensions)=== false){
-        $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+    // $file_ext=strtolower(end(explode('.',$_FILES['blog_img']['name'])));
+    $ext= pathinfo($file_name, PATHINFO_EXTENSION);
+    $ext = strtolower($ext);
+    if( $ext=="jpg" || $ext=="png" || $ext=="jpeg") {
+        $file_name = uniqid().".".$ext;
+        $location = 'uploads/';
+        move_uploaded_file($file_tmp,$location.$file_name);
     }
-    if(empty($errors)==true){
-        $file_name = uniqid().".".$file_ext;
-        move_uploaded_file($file_tmp,"./upload".$file_name);
-        header('location: ./blog.php?msg=success');
-    }else{
-        header('location: ./blog.php?err='.implode(",",$errors).'');
+    else{
+        $errors[]="File not allowed, please choose a JPG or PNG or JPEG file.";
+        header('location: ./blog.php?err='.$errors.'');
     }
-    $user_id = $_COOKIE['CurrentUser'];
-    $sql = "INSERT INTO `blog` (`title`, `description`, `img`, `user_id`) VALUES ('$blog_title', '$description', '$blog_img', '$user_id')";
+    $user_cookie = $_COOKIE['CurrentUser'];
+    $user_sql = "SELECT id FROM `user` WHERE `auth_token` = '$user_cookie'";
+    $user_result = mysqli_query($conn, $user_sql);
+    $user_row = mysqli_fetch_assoc($user_result);
+    $user_id = $user_row['id'];
+    $sql = "INSERT INTO `blog` (`title`, `description`, `img`, `user_id`) VALUES ('$blog_title', '$description', '$file_name', '$user_id')";
     $result = mysqli_query($conn, $sql);
     if($result){
-        header('location: ./index.php');
+        header('location: ./blog.php?success="Blog Created Successfully"');
+        $conn->close();
     }
     else{
         echo "Something went wrong";
+        $conn->close();
     }
 }
 
