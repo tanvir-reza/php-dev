@@ -3,10 +3,7 @@
             header('location: ../login.php');
         }
         require_once('../config/db.php');
-           function sanitizeInput($input) {
-                        $sanitizedInput = htmlspecialchars(strip_tags($input));
-                        return $sanitizedInput;
-            }
+        require_once('../validation/fuctions.php');   
         if(isset($_POST['username']) && isset($_POST['password'])){
             $username = sanitizeInput($_POST['username']);
             $password = sanitizeInput($_POST['password']);

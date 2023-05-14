@@ -2,9 +2,8 @@
 <?php require_once('./navbar.php') ?>
 
 <?php
-if(!isset($_COOKIE['CurrentUser'])){
-        header('location: ./login.php');
-    }
+require_once('./validation/fuctions.php');
+validUser();
 ?>
 
 
@@ -18,7 +17,7 @@ if(!isset($_COOKIE['CurrentUser'])){
                         <h3 class="text-center">Create Blog</h3>
                     </div>
                     <div class="card-body login-card-body">
-                        <form action="" method="POST">
+                        <form action="" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="blog_title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="blog_title" name="blog_title" required>
@@ -45,10 +44,28 @@ if(!isset($_COOKIE['CurrentUser'])){
 
 
 <?php
-if(isset($_POST['blog_title']) && isset($_POST['description']) && isset($_POST['blog_img'])){
+require_once('./config/db.php');
+
+if(isset($_POST['blog_title']) && isset($_POST['description']) && isset($_FILES['blog_img'])){
+    $errors= array();
     $blog_title = $_POST['blog_title'];
     $description = $_POST['description'];
     $blog_img = $_POST['blog_img'];
+    $file_name = $_FILES['blog_img']['name'];
+    $file_tmp =$_FILES['blog_img']['tmp_name'];
+    $file_type=$_FILES['blog_img']['type'];
+    $file_ext=strtolower(end(explode('.',$_FILES['blog_img']['name'])));
+    $extensions= array("jpeg","jpg","png");
+    if(in_array($file_ext,$extensions)=== false){
+        $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+    }
+    if(empty($errors)==true){
+        $file_name = uniqid().".".$file_ext;
+        move_uploaded_file($file_tmp,"./upload".$file_name);
+        header('location: ./blog.php?msg=success');
+    }else{
+        header('location: ./blog.php?err='.implode(",",$errors).'');
+    }
     $user_id = $_COOKIE['CurrentUser'];
     $sql = "INSERT INTO `blog` (`title`, `description`, `img`, `user_id`) VALUES ('$blog_title', '$description', '$blog_img', '$user_id')";
     $result = mysqli_query($conn, $sql);
