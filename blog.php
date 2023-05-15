@@ -21,7 +21,6 @@ validUser();
 
 
 <div class="container text-center">
-
     <div class="container">
         <div class="row">
             <div class="col-md-6 mx-auto login-container">
@@ -54,7 +53,6 @@ validUser();
         </div>
     </div>
 </div>
-
 
 <?php
 require_once('./config/db.php');
@@ -94,10 +92,6 @@ if(isset($_POST['blog_title']) && isset($_POST['description']) && isset($_FILES[
         $conn->close();
     }
 }
-
 ?>
-
-
-
 
 <?php require_once('./footer.php') ?>

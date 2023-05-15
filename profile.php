@@ -74,6 +74,7 @@
                         $result = mysqli_query($conn, $sql);
                         if($result == true){
                             while($getRow = mysqli_fetch_array($result)){
+                                $blog_id = $getRow['blog_id'];
                                 $blog_title = $getRow['title'];
                                 $blog_desc = $getRow['description'];
                                 $blog_img = $getRow['img'];
@@ -85,8 +86,8 @@
                                     <td><img src="./uploads/<?php echo $blog_img; ?>" width="100px" height="100px" alt=""></td>
                                     <td><?php echo $blog_date; ?></td>
                                     <td>
-                                        <a class="btn btn-warning" href="./update_blog.php?up_blog_id=<?php echo $blog_id; ?>">UPDATE</a>
-                                        <a class="btn btn-danger" href="./delete_blog.php?blog_id=<?php echo $blog_id; ?>">DELETE</a>
+                                        <a class="btn btn-warning" href="./validation/edit_blog.php?blog_id=<?php echo $blog_id; ?>">UPDATE</a>
+                                        <a class="btn btn-danger" href="./delete_blog.php?blog_id=.<?php echo $blog_id; ?>">DELETE</a>
                                     </td>
                                 </tr>
                                 <?php
