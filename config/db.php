@@ -5,6 +5,5 @@
 	$db_name = "php-db";
 	$conn = mysqli_connect($db_host, $db_user, $db_pass , $db_name);
     
-	//$db->set_charset("utf8");
 
 ?>
