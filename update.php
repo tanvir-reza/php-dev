@@ -1,5 +1,5 @@
-<?php require_once('./header.php') ?>
-<?php require_once('./navbar.php') ?>
+<?php require_once('./partials/header.php') ?>
+<?php require_once('./partials/navbar.php') ?>
 
 <?php
  if(isset($_GET['e_msg'])){
@@ -77,6 +77,4 @@
 
     
 
-
-
-<?php require_once('./footer.php') ?>
+<?php require_once('./partials/footer.php') ?>

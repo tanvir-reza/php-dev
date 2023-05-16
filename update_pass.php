@@ -1,5 +1,5 @@
-<?php require_once('./header.php') ?>
-<?php require_once('./navbar.php') ?>
+<?php require_once('./partials/header.php') ?>
+<?php require_once('./partials/navbar.php') ?>
 
 <?php
  if(isset($_GET['e_msg'])){
@@ -11,6 +11,12 @@
  if(isset($_GET['old_pass'])){
      echo "<div class='alert alert-danger alert-dismissible fade show w-50 container' role='alert'>
         <strong>Old Password Not Correct !!</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+ }
+ if(isset($_GET['e_msg_pass'])){
+     echo "<div class='alert alert-danger alert-dismissible fade show w-50 container' role='alert'>
+        <strong> Enter Strong Password !!</strong> 
         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
  }
@@ -45,11 +51,11 @@
                         <form action="./validation/update_pass_core.php" method="POST">
                             <div class="mb-3">
                                 <label for="old_password" class="form-label">Enter Old Password</label>
-                                <input type="password" class="form-control" id="old_password" name="old_password" >
+                                <input type="password" class="form-control" id="old_password" name="old_password" placeholder = "Enter Old Password" required>
                             </div>
                             <div class="mb-3">
                                 <label for="new_password" class="form-label">Enter New Password</label>
-                                <input type="password"  class="form-control" id="new_password" name="new_password" >
+                                <input type="password"  class="form-control" id="new_password" name="new_password" placeholder = "Enter New Password" required>
                             </div>
                                 <div class="text-center me-auto">
                                     <button type="submit" class="btn btn-primary">Update</button>
@@ -73,6 +79,4 @@
     }
 ?>
 
-
-
-<?php require_once('./footer.php') ?>
+<?php require_once('./partials/footer.php') ?>

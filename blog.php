@@ -1,5 +1,5 @@
-<?php require_once('./header.php') ?>
-<?php require_once('./navbar.php') ?>
+<?php require_once('./partials/header.php') ?>
+<?php require_once('./partials/navbar.php') ?>
 
 <?php
 require_once('./validation/fuctions.php');
@@ -7,7 +7,7 @@ validUser();
 
  if(isset($_GET['err'])){
      echo "<div class='alert alert-danger alert-dismissible fade show w-50 container' role='alert'>
-        <strong>".$_GET['err']."</strong> 
+        <strong>File not allowed, please choose a JPG or PNG or JPEG file.</strong> 
         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
  }
@@ -17,12 +17,7 @@ validUser();
         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
  }
- if(isset($_GET['success_update'])){
-     echo "<div class='alert alert-success alert-dismissible fade show w-50 container' role='alert'>
-        <strong>Blog Updated Successfully !!!</strong> 
-        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-        </div>";
- }
+ 
 ?>
 
 
@@ -38,11 +33,12 @@ validUser();
                         <form action="" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="blog_title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="blog_title" name="blog_title" required>
+
+                                <input type="text" class="form-control" id="blog_title" name="blog_title" required placeholder = "Enter Blog Title">
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
-                                <input type="text" class="form-control" id="description" name="description" required>
+                                <input type="text" class="form-control" id="description" name="description" required placeholder = "Enter Blog Description">
                             </div>
                             <div class="mb-3">
                                 <label for="blog_img" class="form-label">IMG</label>
@@ -101,4 +97,4 @@ if(isset($_POST['blog_title']) && isset($_POST['description']) && isset($_FILES[
 }
 ?>
 
-<?php require_once('./footer.php') ?>
+<?php require_once('./partials/footer.php') ?>

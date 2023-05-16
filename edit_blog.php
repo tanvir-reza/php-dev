@@ -1,10 +1,18 @@
-<?php require_once('../header.php') ?>
-<?php require_once('../navbar.php') ?>
+<?php require_once('./partials/header.php') ?>
+<?php require_once('./partials/navbar.php') ?>
 
 <?php
-require_once('../validation/fuctions.php');
+if(isset($_GET['err'])){
+     echo "<div class='alert alert-danger alert-dismissible fade show w-50 container' role='alert'>
+        <strong>Plz Update Any Field</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+ }
+
+
+require_once('./validation/fuctions.php');
 validUser();
-require_once('../config/db.php');
+require_once('./config/db.php');
 
 if(!isset($_GET['blog_id'])){
     header('location: ./blog.php');
@@ -30,20 +38,22 @@ else{
                         <h3 class="text-center">Update Blog</h3>
                     </div>
                     <div class="card-body login-card-body">
-                        <form action="./edit_blog_core.php" method="POST" enctype="multipart/form-data">
+                        <form action="./validation/edit_blog_core.php" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="blog_title" class="form-label">Title</label>
                                 <input type="hidden" name="blog_no" value="<?php echo $blog_no ?>">
+                                <input type="hidden" name="old_blog_title" value="<?php echo $blog_title ?>">
                                 <input type="text" value= "<?php echo $blog_title ?>" class="form-control" id="blog_title" name="blog_title" >
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
+                                <input type="hidden" name="old_blog_description" value="<?php echo $blog_description ?>">
                                 <input type="text" value= "<?php echo $blog_description ?>" class="form-control" id="description" name="description" >
                             </div>
                             <div class="mb-3">
-                                <img src="../uploads/<?php echo $blog_image ?>" width="50px" height="50px">
+                                <img src="./uploads/<?php echo $blog_image ?>" width="50px" height="50px">
                                 <label for="up_blog_img" class="form-label">IMG</label>
-                                <input type="hidden" name="old_img" value="<?php echo $blog_image ?>">
+                                <input type="hidden" id="old_img" name="old_img" value="<?php echo $blog_image ?>">
                                 <input type="file" class="form-control" id="up_blog_img" name="up_blog_img" >
                             </div>
                             
@@ -63,4 +73,4 @@ else{
 
 
 
-<?php require_once('../footer.php') ?>
+<?php require_once('./partials/footer.php') ?>

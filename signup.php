@@ -1,10 +1,31 @@
-<?php require_once('./header.php') ?>
-<?php require_once('./navbar.php') ?>
+<?php require_once('./partials/header.php') ?>
+<?php require_once('./partials/navbar.php') ?>
+
+<div style="display:none" id="strPass" class='alert alert-info alert-dismissible fade show w-50 container ' role='alert'>
+        <strong>
+            <pre>
+                1. Password At least 8 characters long.
+                2. Password must contain at least one uppercase letter.
+                3. Password must contain at least one lowercase letter.
+                4. Password must contain at least one number.
+                5. Password must contain at least one special character.
+            </pre>
+        </strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+</div>
 
 <?php 
     if(isset($_SESSION['CurrentUser'])){
         header('location: ./index.php');
     }
+    if(isset($_GET['e_msg_password']))
+        {
+        echo "<div class='alert alert-danger alert-dismissible fade show w-50 container' role='alert'>
+        <strong>Please Choose Strong Password !!</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+    }
+
     if(isset($_REQUEST['e_msg'])){
         if($_GET['e_msg'] == 'error1')
         {
@@ -20,6 +41,7 @@
         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
         }
+        
     }
 ?>
 
@@ -31,18 +53,18 @@
                         <h3 class="text-center">SignUp</h3>
                     </div>
                     <div class="card-body login-card-body">
-                        <form action="./signup.php" method="POST">
+                        <form action="./validation/signup_core.php" method="POST">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Enter Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
+                                <input type="text" class="form-control" id="username" name="username" required placeholder = "Enter username">
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Enter Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required placeholder = "Enter email">
                             </div>
-                            <div class="mb-3">
+                            <div onmouseover="own()" class="mb-3">
                                 <label for="password" class="form-label">Enter Password <i class="fa fa-question-circle"></i></label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <input type="password" class="form-control" id="password" name="password" required placeholder = "Enter Strong Password">
                             </div>
         
                                 <div class="text-center me-auto">
@@ -57,57 +79,11 @@
         </div>
     </div>
 
-    <?php
-        require_once('./config/db.php');
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-            function sanitizeInput($input) {
-                        $sanitizedInput = htmlspecialchars(strip_tags($input));
-                        return $sanitizedInput;
+    <script>
+            function own(){
+                document.getElementById('strPass').style.display = "block";
             }
-
-            
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-            
-            $username = sanitizeInput($_POST['username']);
-            $email = sanitizeInput($_POST['email']);
-            $password = sanitizeInput($_POST['password']);
-            $password = md5(sha1($password));
-            
-            $sql_uniq = "SELECT * FROM `user` WHERE `username` = ? OR `email` = ? ";
-            $stmt = $conn->prepare($sql_uniq);
-            $stmt->bind_param("ss", $username, $email);
-            $stmt->execute();
-            $result_uniq = $stmt->get_result();
-            if(mysqli_num_rows($result_uniq) > 0){
-                header('location: ./signup.php?e_msg=error1');
-                $stmt->close();
-                $conn->close();
-            }
-            else{
-                $stmt->close();
-                $authToken = md5(sha1($password));
-                echo $authToken;
-                $sql = "INSERT INTO `user` (`username`, `email`, `password` , `auth_token`) VALUES (?, ?, ?, ?)";
-                $stmt1 = $conn->prepare($sql);
-                $stmt1->bind_param("ssss", $username, $email, $password ,$authToken);
-                $result = $stmt1->execute();
-                if($result){
-                    header('location: ./login.php?msg=success');
-                }else{
-                    header('location: ./signup.php?e_msg=error2');
-                }
-            }
-
-            $stmt1->close();
-            $conn->close();
-            
-            
-        }
-    ?>
+    </script>
 
 
-
-<?php require_once('./footer.php') ?>
+<?php require_once('./partials/footer.php') ?>

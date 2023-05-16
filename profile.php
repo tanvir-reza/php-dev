@@ -1,8 +1,9 @@
-<?php require_once('./header.php') ?>
-<?php require_once('./navbar.php') ?>
-
+<?php require_once('./partials/header.php') ?>
+<?php require_once('./partials/navbar.php') ?>
 
 <?php
+require_once('./validation/fuctions.php');
+validUser();
  if(isset($_GET['s_msg_update'])){
      echo "<div class='alert alert-success alert-dismissible fade show w-50 container' role='alert'>
         <strong>Update Successfully !!</strong> 
@@ -13,6 +14,12 @@
   if(isset($_GET['p_msg_update'])){
      echo "<div class='alert alert-success alert-dismissible fade show w-50 container' role='alert'>
         <strong>Password Update Successfully !!</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+ }
+ if(isset($_GET['success_update'])){
+     echo "<div class='alert alert-success alert-dismissible fade show w-50 container' role='alert'>
+        <strong>Blog Updated Successfully !!!</strong> 
         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
  }
@@ -42,10 +49,6 @@
         if($result == true){
             while($getRow = mysqli_fetch_array($result)){
                 $username = $getRow['Username'];
-                $email = $getRow['email'];
-                $bio = $getRow['bio'];
-
-                
             }
             ?>
             <div class="container card ">
@@ -86,7 +89,7 @@
                                     <td><img src="./uploads/<?php echo $blog_img; ?>" width="100px" height="100px" alt=""></td>
                                     <td><?php echo $blog_date; ?></td>
                                     <td>
-                                        <a class="btn btn-warning" href="./validation/edit_blog.php?blog_id=<?php echo $blog_id; ?>">UPDATE</a>
+                                        <a class="btn btn-warning" href="./edit_blog.php?blog_id=<?php echo $blog_id; ?>">UPDATE</a>
                                         <a class="btn btn-danger" href="./delete_blog.php?blog_id=.<?php echo $blog_id; ?>">DELETE</a>
                                     </td>
                                 </tr>
@@ -111,7 +114,8 @@
 
 
 
-<?php require_once('./footer.php') ?>
+<?php require_once('./partials/footer.php') ?>
+
     
     
 

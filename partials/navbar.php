@@ -8,26 +8,26 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+          <a class="nav-link active" aria-current="page" href="../php-dev/index.php">Home</a>
         </li>
         <?php if(isset($_COOKIE['CurrentUser'])){
         echo  '<li class="nav-item">
-          <a class="nav-link" href="./profile.php">Profile</a>
+          <a class="nav-link" href="../php-dev/profile.php">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./blog.php">Blog</a>
+          <a class="nav-link" href="../php-dev/blog.php">Blog</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./validation/logout_core.php">Logout</a>
+          <a class="nav-link" href="../php-dev/validation/logout_core.php">Logout</a>
         </li>';
         }
         else{
           echo '
           <li class="nav-item">
-          <a class="nav-link" href="login.php">Login</a>
+          <a class="nav-link" href="../php-dev/login.php">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="signup.php">SignUp</a>
+          <a class="nav-link" href="../php-dev/signup.php">SignUp</a>
         </li>';
         } 
         ?>

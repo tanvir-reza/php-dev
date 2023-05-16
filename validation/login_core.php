@@ -3,15 +3,10 @@
             header('location: ../login.php');
         }
         require_once('../config/db.php');
-        require_once('../validation/fuctions.php');   
+        require_once('./fuctions.php');   
         if(isset($_POST['username']) && isset($_POST['password'])){
             $username = sanitizeInput($_POST['username']);
             $password = sanitizeInput($_POST['password']);
-            
-            $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
             $sql = "SELECT * FROM user WHERE username='$username' OR email='$username'";
             $result = mysqli_query($conn, $sql);
             $user = mysqli_fetch_assoc($result);

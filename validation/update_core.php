@@ -4,18 +4,11 @@
         }
         else{
             require_once('../config/db.php');
-           function sanitizeInput($input) {
-                        $sanitizedInput = htmlspecialchars(strip_tags($input));
-                        return $sanitizedInput;
-            }
+            require_once('./fuctions.php');
             $username = sanitizeInput($_POST['username']);
             $email = sanitizeInput($_POST['email']);
             $bio = sanitizeInput($_POST['bio']);
             $CurrentUser = $_COOKIE['CurrentUser']; 
-            
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
             $sql = "UPDATE user SET Username='$username', email='$email', bio='$bio' WHERE auth_token='$CurrentUser'";
             $result = mysqli_query($conn, $sql);
             if($result == true){
