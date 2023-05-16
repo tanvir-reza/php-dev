@@ -1,7 +1,7 @@
 <?php require_once('./partials/header.php') ?>
 <?php require_once('./partials/navbar.php') ?>
 
-<div style="display:none" id="strPass" class='alert alert-info alert-dismissible fade show w-50 container ' role='alert'>
+<!-- <div style="display:none" id="strPass" class='alert alert-info alert-dismissible fade show w-50 container ' role='alert'>
         <strong>
             <pre>
                 1. Password At least 8 characters long.
@@ -12,7 +12,7 @@
             </pre>
         </strong>
         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-</div>
+</div> -->
 
 <?php 
     if(isset($_SESSION['CurrentUser'])){
@@ -79,11 +79,11 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
             function own(){
                 document.getElementById('strPass').style.display = "block";
             }
-    </script>
+    </script> -->
 
 
 <?php require_once('./partials/footer.php') ?>

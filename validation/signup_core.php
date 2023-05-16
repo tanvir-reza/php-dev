@@ -1,7 +1,7 @@
 <?php
         require_once('../config/db.php');
         require_once('./fuctions.php');
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_POST['username'] && $_POST['email'] && $_POST['password']){
             $username = sanitizeInput($_POST['username']);
             $email = sanitizeInput($_POST['email']);
             $password_user = sanitizeInput($_POST['password']);
@@ -38,5 +38,8 @@
             else{
                 header('location: ../signup.php?e_msg_password=error3');
             }
+        }
+        else{
+            header('location: ../signup.php?');
         }
     ?>

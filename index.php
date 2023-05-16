@@ -18,6 +18,9 @@ require_once('./validation/fuctions.php');
     $sql = "SELECT * FROM blog inner join user on blog.user_id = user.id";
     $result = mysqli_query($conn, $sql);
     if($result == true){
+        ?>
+        <div class="row mt-4"> 
+            <?php
         while($getRow = mysqli_fetch_array($result)){
             $blog_id = $getRow['blog_id'];
             $blog_title = $getRow['title'];
@@ -26,7 +29,8 @@ require_once('./validation/fuctions.php');
             $blog_author = $getRow['Username'];
             $blog_date = $getRow['created_at'];
             ?>
-            <div class="card" style="width: 14rem; align-items: center !important;">
+            <div class="col-md-3">
+                <div class="card" style="width: 14rem; align-items: center !important;">
             <img class="card-img-top w-75 img-thumbnail" src="./uploads/<?php echo $blog_img ?>" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title"><?php echo $blog_title ?></h5>
@@ -36,8 +40,13 @@ require_once('./validation/fuctions.php');
                 <p class="card-text">Created : <?php echo date('d M Y',strtotime($blog_date)); ?></p>
             </div>
             </div>
+            </div>
+        
             <?php
         }
+        ?>
+        </div>  
+        <?php
     }
     ?>
 </div>
