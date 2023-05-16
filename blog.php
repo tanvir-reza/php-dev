@@ -17,6 +17,12 @@ validUser();
         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
  }
+ if(isset($_GET['success_update'])){
+     echo "<div class='alert alert-success alert-dismissible fade show w-50 container' role='alert'>
+        <strong>Blog Updated Successfully !!!</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
+ }
 ?>
 
 
@@ -68,6 +74,7 @@ if(isset($_POST['blog_title']) && isset($_POST['description']) && isset($_FILES[
     $ext= pathinfo($file_name, PATHINFO_EXTENSION);
     $ext = strtolower($ext);
     if( $ext=="jpg" || $ext=="png" || $ext=="jpeg") {
+        
         $file_name = uniqid().".".$ext;
         $location = 'uploads/';
         move_uploaded_file($file_tmp,$location.$file_name);
