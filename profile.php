@@ -22,6 +22,11 @@ validUser();
         <strong>Blog Updated Successfully !!!</strong> 
         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
+ } if(isset($_GET['del_msg'])){
+     echo "<div class='alert alert-success alert-dismissible fade show w-50 container' role='alert'>
+        <strong>Blog Delete Successfully !!!</strong> 
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+        </div>";
  }
 
  ?>
